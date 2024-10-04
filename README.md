@@ -1,8 +1,8 @@
-   <p align="center">
-   <img src="https://github.com/linkedin/greykite/blob/master/LOGO-C8.png" width="450" height="300">
-   </p>
+<p align="center">
+<img src="https://github.com/linkedin/greykite/blob/master/LOGO-C8.png" width="450" height="300">
+</p>
 
-   # Greykite for Data Science
+# Greykite for Data Science
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -10,6 +10,7 @@
 - [Greykite Architecture](#greykite-architecture)
 - [Growth Functions and Trend Components](#growth-functions-and-trend-components)
 - [Model Selection in Greykite](#model-selection-in-greykite)
+  - [Comparison of Silverkite and Prophet](#comparison-of-silverkite-and-prophet)
 - [Greykite for Time Series Forecasting](#greykite-for-time-series-forecasting)
   - [Modeling Framework](#1-modeling-framework)
   - [Event and Holiday Handling](#2-event-and-holiday-handling)
@@ -20,11 +21,6 @@
 - [Advantages of Greykite](#advantages-of-greykite)
 - [Disadvantages of Greykite](#disadvantages-of-greykite)
 - [Comparison with Other Forecasting Frameworks](#comparison-with-other-forecasting-frameworks)
-  - [Greykite vs Facebook Prophet](#greykite-vs-facebook-prophet)
-  - [Greykite vs ARIMA](#greykite-vs-arima)
-  - [Greykite vs NeuralProphet](#greykite-vs-neuralprophet)
-  - [Greykite vs Holt-Winters](#greykite-vs-holt-winters)
-  - [Comparison Table](#comparison-table)
 - [Popular Data Science Applications of Greykite](#popular-data-science-applications-of-greykite)
   - [Demand Forecasting](#1-demand-forecasting)
   - [Financial Time Series Forecasting](#2-financial-time-series-forecasting)
@@ -75,27 +71,27 @@ Greykite emphasizes model interpretability by providing insights into:
 
 ## Growth Functions and Trend Components
 
-Greykite provides extensive support for modeling growth patterns and trends in time series data. The **Silverkite** model uses the following growth functions and trend models:
+Greykite provides extensive support for modelling growth patterns and trends in time series data. The **Silverkite** model uses the following growth functions and trend models:
 
 ### 1. **Linear Growth**
    - **Formula**: 
    
    $$ y(t) = \beta_0 + \beta_1 \cdot t $$
-   
+
    This is a simple linear trend where the forecast grows or shrinks steadily over time.
 
 ### 2. **Logarithmic Growth**
    - **Formula**: 
    
    $$ y(t) = \beta_0 + \beta_1 \cdot \log(t) $$
-   
+
    This growth model captures diminishing returns, where the rate of growth slows down over time but never truly flattens.
 
 ### 3. **Exponential Growth**
    - **Formula**: 
    
    $$ y(t) = \beta_0 \cdot e^{\beta_1 \cdot t} $$
-   
+
    Commonly used in scenarios where the growth rate accelerates over time, such as viral spread or technology adoption.
 
 ### 4. **Piecewise Linear Growth**
@@ -103,7 +99,7 @@ Greykite provides extensive support for modeling growth patterns and trends in t
    - Example: Growth accelerates during holiday seasons or after a product launch.
 
 ### 5. **Custom Growth Functions**
-   - Users can define their own growth functions by leveraging **external regressors** that influence trends. For instance, economic indicators, marketing spend, or competitor actions can be modeled as growth components.
+   - Users can define their growth functions by leveraging **external regressors** that influence trends. For instance, economic indicators, marketing spend, or competitor actions can be modeled as growth components.
 
 ---
 
@@ -112,14 +108,46 @@ Greykite provides extensive support for modeling growth patterns and trends in t
 The following table summarizes the different models available in Greykite, providing a comparison of their characteristics:
 
 | **Model**                  | **Description**                                           | **Seasonality**        | **Events Handling**    | **Strengths**                       | **Weaknesses**                     |
-|----------------------------|-----------------------------------------------------------|------------------------|-------------------------|-------------------------------------|------------------------------------|
-| **Silverkite**             | A scalable forecasting algorithm with flexibility         | Automatic detection     | Supports events         | Handles multiple seasonality         | May require tuning                 |
-| **AutoARIMA**              | Automated version of ARIMA for autoregressive forecasting | Manual specification    | Limited                 | Good for non-seasonal data          | Less interpretable                 |
+|----------------------------|-----------------------------------------------------------|------------------------|------------------------|-------------------------------------|------------------------------------|
+| **Silverkite**              | A scalable forecasting algorithm with flexibility         | Automatic detection     | Supports events         | Handles multiple seasonality        | May require tuning                 |
+| **AutoARIMA**               | Automated version of ARIMA for autoregressive forecasting | Manual specification    | Limited                 | Good for non-seasonal data          | Less interpretable                 |
 | **ETS (Error, Trend, Seasonality)** | Exponential Smoothing State Space Model       | Manual specification    | Limited                 | Simple and interpretable            | Limited flexibility                |
-| **Naive Forecast**         | Basic method that forecasts based on the last observation | None                   | None                    | Easy to implement                   | Not suitable for complex patterns  |
+| **Naive Forecast**          | Basic method that forecasts based on the last observation | None                   | None                    | Easy to implement                   | Not suitable for complex patterns  |
 
+---
 
 ### Comparison of Silverkite and Prophet
+
+#### High-Level Comparison
+
+| **Pointers**                  | **PROPHET**              | **SILVERKITE**           |
+|-------------------------------|--------------------------|--------------------------|
+| Speed                         | Slower                   | Faster                   |
+| Forecast Accuracy (Default)    | Good                     | Good                     |
+| Forecast Accuracy (Customized) | Limited                  | High                     |
+| Prediction Interval Accuracy   | TBD                      | TBD                      |
+| Interpretability               | Good (Additive Model)     | Good (Additive Model)     |
+| Ease of Use                    | Good                     | Good                     |
+| API                            | Similar to 'sklearn'     | Uses sklearn              |
+| Fit                            | Bayesian                 | Ridge, Elastic Net, Boosted Trees etc. |
+
+
+#### Customization Options
+
+| **Customization** | **PROPHET**| **SILVERKITE**|
+|---------------|------------|---------------|
+|Automatic Defaults | Yes | Yes |
+|Growth | Linear, Logistic | Linear, Sqrt, Quadratic, Any Combination, **Custom** |
+|Seasonality | Daily, Weekly, Yearly, Custom | Daily, Weekly, Monthly, Quarterly, Yearly |
+|Holidays | Specify countries, With window | Specify by name or country, With window; or custom events |
+|Trend Changepoints | Yes | Yes |
+|Seasonality Changepoints | No | Yes |
+|Regressors | Yes | Yes |
+|Autoregression | Limited, Via regressors | Full support, Coming soon |
+|Interaction terms | Build it yourself (Regressor) | Model formula terms, or as regressor |
+|Extras | Prior scale (Bayesian) | Fitting Algorithm |
+|Loss Function | MSE | MSE, Quantile loss (with gradient_boosting fitting algorithm) |
+|Prediction Intervals | Yes | Yes |
 
 ---
 
@@ -129,7 +157,7 @@ Greykite was designed with time series forecasting in mind, addressing common ch
 
 ### 1. **Modeling Framework**
    - **Silverkite**: The main forecasting model based on linear regression that handles trends, seasonality, holidays, and regressors.
-   - **Auto-Arima Integration**: Supports ARIMA models and automatically tunes them for optimal forecasting performance.
+   - **AutoARIMA Integration**: Supports ARIMA models and automatically tunes them for optimal forecasting performance.
 
 ### 2. **Event and Holiday Handling**
 Greykite can automatically detect and incorporate event-related effects (such as promotions, holidays, and special events) into its forecasting process.
@@ -137,125 +165,130 @@ Greykite can automatically detect and incorporate event-related effects (such as
 - **Event Markers**: Allows manual or automated inclusion of special events that impact forecasts.
 
 ### 3. **Model Diagnostics and Debugging**
-Greykite provides in-depth diagnostic reports that help:
-- Identify issues in the model performance.
-- Examine how holidays, seasonality, or trend components affect the forecasts.
-- Detect outliers and anomalies in data that might be influencing results.
+Greykite provides tools to evaluate the accuracy of the forecasts and understand potential issues in the model fit.
+- Evaluate model performance through statistical metrics (like MAE, RMSE, MAPE).
+- Conduct residual analysis to uncover patterns and potential improvements.
 
 ### 4. **Uncertainty Estimation**
-Greykite offers uncertainty estimates for each forecast, helping businesses assess risk. This is particularly useful in areas like supply chain management and financial risk forecasting.
+Greykite provides confidence intervals for forecasts, enabling users to understand the potential variability of their predictions.
+- **Prediction Intervals**: Estimate uncertainty around future predictions based on historical patterns and variability.
+- **Scenario Analysis**: Allows for the simulation of different scenarios by altering inputs and observing potential outcomes.
 
 ---
 
 ## Greykite's Forecasting Workflow
 
-The **forecasting workflow** in Greykite involves a structured approach to handle the entire forecasting process. Here are the key steps:
-
-### 1. **Data Preprocessing**:
-   - **Cleaning the data**: Remove anomalies, handle missing values, and identify outliers.
-   - **Scaling and Transformation**: Normalize the data to ensure the model performs well.
-   - **Feature Creation**: Generate time-based features like hour, day, day of the week, month, etc.
-   - **Holiday/Event Features**: Integrate event data (e.g., holidays, promotions).
-   - **External Factors**: Include additional data like weather or economic indicators.
-
-### 2. **Model Selection and Training**:
-   - **Choose the model**: Select from Silverkite, ARIMA, or ETS based on the data characteristics.
-   - **Cross-Validation**: Use k-fold cross-validation to fine-tune the model.
-   - **Hyperparameter Tuning**: Adjust hyperparameters for the best results.
-
-### 3. **Evaluation and Diagnostics**:
-   - **Performance Metrics**: Evaluate models based on RMSE, MAE, and MAPE.
-   - **Residual Analysis**: Analyze residuals to diagnose model fit and detect anomalies.
-   - **Uncertainty Bounds**: Estimate confidence intervals around the forecast.
-
-### 4. **Deployment**:
-   - **API Integration**: Deploy the model using APIs for real-time forecasting.
-   - **Monitor Performance**: Continuously monitor and update the model as new data arrives.
+1. **Data Preparation**: Cleaning and preprocessing time series data.
+2. **Feature Engineering**: Automatically generating time-related features, holidays, and events.
+3. **Model Selection**: Choosing the appropriate model based on data characteristics.
+4. **Training**: Fitting the model to the historical data.
+5. **Forecasting**: Generating predictions for future time points.
+6. **Model Evaluation**: Analyzing model performance through metrics and diagnostics.
+7. **Iteration**: Refining the model and feature set based on evaluation results.
 
 ---
 
 ## Greykite Variants and Extensions
 
-Greykite is flexible and allows for customization through several extensions:
-- **External Regressors**: Can incorporate external regressors like weather data, macroeconomic indicators, or competitor actions.
-- **Custom Feature Engineering**: Users can add custom time-based or event-based features to better capture patterns.
-- **Deep Learning Models**: While limited compared to TensorFlow, Greykite offers basic neural network integration through external libraries for complex scenarios.
+Greykite supports various extensions and variants to enhance its functionality:
+- **Greykite-Meta**: A higher-level abstraction for users who want a simplified interface for forecasting.
+- **Integrations with other Libraries**: Seamless integration with libraries like **Pandas**, **NumPy**, and **Scikit-learn**.
 
 ---
 
 ## Advantages of Greykite
 
-1. **Interpretability**: The Silverkite algorithm is designed to provide understandable results with insights into trends, seasonality, and external events.
-2. **Event Handling**: Built-in support for holidays and events, crucial for accurate business forecasts.
-3. **Uncertainty Estimation**: Includes confidence intervals to quantify risk in forecasts.
-4. **Scalability**: Capable of handling large datasets with complex seasonal and event-based patterns.
-5. **Flexibility**: Supports a variety of trend models (linear, logarithmic, exponential) and custom event handling.
+- **User-Friendly**: Easy to use for data scientists of all skill levels.
+- **Flexible**: Accommodates various types of time series data.
+- **Scalable**: Efficiently handles large datasets.
+- **Interpretable Models**: Provides insights into model decisions and forecasts.
+- **Strong Community Support**: Active development and community engagement.
 
 ---
 
 ## Disadvantages of Greykite
 
-1. **Learning Curve**: Users need to understand time series concepts to fully utilize the library.
-2. **Limited Deep Learning Support**: Compared to frameworks like TensorFlow, Greykite offers less support for complex deep learning models.
-3. **Fewer Resources**: Being relatively new, there are fewer community resources and tutorials compared to established frameworks.
-4. **Documentation**: Advanced features may have sparse documentation.
+- **Limited Advanced ML Techniques**: Not as flexible as some deep learning models for complex time series data.
+- **Steeper Learning Curve for Customization**: While user-friendly, advanced users may find customizing models a bit complex.
 
 ---
 
 ## Comparison with Other Forecasting Frameworks
 
-### Greykite vs Facebook Prophet
-- **Greykite**: Offers more detailed handling of events and holidays, supports external regressors, and provides better uncertainty estimates.
-- **Facebook Prophet**: Easier to use for beginners, but less flexible when it comes to customizations like external regressors.
+### 1. Greykite vs Facebook Prophet
 
-### Greykite vs ARIMA
-- **Greykite**: Handles seasonality, events, and external factors better than ARIMA.
-- **ARIMA**: Better for simpler, non-seasonal time series, but requires manual tuning.
+| **Feature**                  | **Greykite**             | **Prophet**               |
+|------------------------------|--------------------------|---------------------------|
+| Performance                   | Faster                   | Moderate                  |
+| Handling of holidays/events   | Excellent                | Good                      |
+| Seasonality detection         | Automatic                | Manual                    |
+| Ease of use                   | Moderate                 | Good                      |
+| Community support             | Growing                  | Established               |
 
-### Greykite vs NeuralProphet
-- **Greykite**: Designed for interpretability, with limited deep learning capabilities.
-- **NeuralProphet**: Leverages neural networks for complex patterns, but may require more computation and tuning.
+### 2. Greykite vs ARIMA
 
-### Greykite vs Holt-Winters
-- **Greykite**: More customizable and capable of handling complex seasonality and external events.
-- **Holt-Winters**: Simple and interpretable, but limited in capturing event effects or complex seasonality.
+| **Feature**                  | **Greykite**             | **ARIMA**                 |
+|------------------------------|--------------------------|---------------------------|
+| Flexibility                   | High                     | Moderate                  |
+| Seasonality handling          | Built-in                 | Requires manual setup     |
+| Data requirement              | Minimal                  | Requires stationary data   |
+| Complexity                    | Moderate                 | Complex                   |
+
+### 3. Greykite vs NeuralProphet
+
+| **Feature**                  | **Greykite**             | **NeuralProphet**         |
+|------------------------------|--------------------------|---------------------------|
+| Speed                         | Faster                   | Slower                    |
+| Interpretability              | High                     | Moderate                  |
+| Neural Network capabilities    | None                     | Strong                    |
+| Time Series Complexity        | Moderate                 | High                      |
+
+### 4. Greykite vs Holt-Winters
+
+| **Feature**                  | **Greykite**             | **Holt-Winters**          |
+|------------------------------|--------------------------|---------------------------|
+| Flexibility                   | High                     | Low                       |
+| Seasonality handling          | Automatic                | Fixed                     |
+| Performance                   | Excellent                | Moderate                  |
 
 ### Comparison Table
 
-| **Framework**        | **Customization**                 | **Event Handling**          | **Deep Learning Support** | **Uncertainty Estimation** | **Best For**                       |
-|----------------------|-----------------------------------|-----------------------------|---------------------------|----------------------------|------------------------------------|
-| **Greykite**         | High                             | Excellent                   | Limited                    | Excellent                   | Large-scale business forecasts    |
-| **Facebook Prophet** | Medium                           | Good                        | Limited                    | Good                        | Quick, general-purpose forecasts  |
-| **ARIMA**            | Low                              | Limited                     | None                       | Medium                      | Non-seasonal data, manual tuning  |
-| **NeuralProphet**    | High                             | Good                        | High                       | Good                        | Complex patterns, deep learning   |
-| **Holt-Winters**     | Low                              | None                        | None                       | None                        | Simple seasonal data forecasting  |
+| **Feature**                  | **Greykite**             | **Facebook Prophet**      | **ARIMA**                 | **NeuralProphet**         | **Holt-Winters**          |
+|------------------------------|--------------------------|---------------------------|---------------------------|---------------------------|---------------------------|
+| Speed                         | Faster                   | Moderate                  | Moderate                  | Slower                    | Fast                      |
+| Flexibility                   | High                     | Moderate                  | Moderate                  | High                      | Low                       |
+| Seasonality handling          | Built-in                 | Manual                    | Requires manual setup     | Built-in                  | Fixed                     |
+| Interpretability              | High                     | Moderate                  | High                      | Moderate                  | High                      |
 
 ---
 
 ## Popular Data Science Applications of Greykite
 
-### 1. **Demand Forecasting**
-Greykite helps businesses forecast demand for products or services by accounting for seasonality, holidays, and promotions.
+### 1. Demand Forecasting
+Greykite is widely used for predicting demand in various industries, helping businesses optimize inventory levels and reduce costs.
 
-### 2. **Financial Time Series Forecasting**
-Greykite is extensively used for forecasting financial time series, such as stock prices, asset management, and risk forecasting.
+### 2. Financial Time Series Forecasting
+Financial analysts leverage Greykite for stock price prediction and financial market analysis.
 
-### 3. **Capacity Planning**
-In industries like cloud computing or transportation, Greykite helps businesses predict resource requirements, ensuring efficient use of infrastructure.
+### 3. Capacity Planning
+Organizations utilize Greykite for resource allocation and capacity planning based on forecasted demand.
 
-### 4. **Sales Forecasting**
-With Greykite’s ability to incorporate holidays, promotions, and events, it provides accurate sales forecasts for retail and e-commerce companies.
+### 4. Sales Forecasting
+Businesses apply Greykite to predict sales trends, enabling effective sales strategies and marketing efforts.
 
 ---
 
 ## Challenges with Greykite in Data Science
 
-1. **Learning Curve**: The modular design of Greykite requires users to understand time series fundamentals to make full use of its features.
-2. **Limited Neural Network Integration**: Greykite doesn’t support deep learning models as extensively as other frameworks like NeuralProphet or PyTorch Forecasting.
-3. **Documentation**: As a relatively newer library, there are fewer resources and community support compared to more established time series forecasting tools.
+1. **Data Quality**: Inaccurate or missing data can significantly impact forecasting accuracy.
+2. **Complexity in Feature Engineering**: While feature engineering is powerful, it can be complex and time-consuming.
+3. **Need for Customization**: For unique forecasting challenges, significant customization may be necessary.
+4. **Interpreting Uncertainty**: While Greykite provides uncertainty estimation, understanding and utilizing these predictions effectively can be challenging.
 
 ---
 
 ## Conclusion
 
-Greykite is a powerful, scalable, and highly interpretable time series forecasting framework specifically designed to meet the forecasting needs of businesses. With its Silverkite algorithm, advanced feature engineering capabilities, and robust uncertainty estimation, it stands out as a strong competitor to traditional time series models like ARIMA and more modern tools like Facebook Prophet. While it has some limitations, particularly in its deep learning support, Greykite is an excellent tool for scalable, interpretable forecasting with a business focus.
+Greykite is a powerful, flexible, and scalable tool for time series forecasting. Its user-friendly design, along with its ability to handle complex data scenarios, makes it a valuable asset for data scientists. As businesses increasingly rely on data-driven decisions, mastering tools like Greykite will be essential for achieving accurate forecasts and optimizing operations.
+
+For more detailed information, you can refer to the official documentation here: [Greykite Documentation](https://linkedin.github.io/greykite/docs/1.0.0/html/index.html).
