@@ -2,7 +2,7 @@
    <img src="https://github.com/linkedin/greykite/blob/master/LOGO-C8.png" width="450" height="300">
    </p>
 
-  # Greykite for Data Science
+# Greykite for Data Science
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -19,6 +19,11 @@
 - [Advantages of Greykite](#advantages-of-greykite)
 - [Disadvantages of Greykite](#disadvantages-of-greykite)
 - [Comparison with Other Forecasting Frameworks](#comparison-with-other-forecasting-frameworks)
+  - [Greykite vs Facebook Prophet](#greykite-vs-facebook-prophet)
+  - [Greykite vs ARIMA](#greykite-vs-arima)
+  - [Greykite vs NeuralProphet](#greykite-vs-neuralprophet)
+  - [Greykite vs Holt-Winters](#greykite-vs-holt-winters)
+  - [Comparison Table](#comparison-table)
 - [Popular Data Science Applications of Greykite](#popular-data-science-applications-of-greykite)
   - [Demand Forecasting](#1-demand-forecasting)
   - [Financial Time Series Forecasting](#2-financial-time-series-forecasting)
@@ -106,30 +111,35 @@ Greykite offers uncertainty estimates for each forecast, helping businesses asse
 
 ## Greykite's Forecasting Workflow
 
-The **forecasting workflow** in Greykite typically follows these steps:
+The **forecasting workflow** in Greykite involves a structured approach to handle the entire forecasting process. Here are the key steps:
 
-1. **Data Preprocessing**:
-   - Clean, scale, and transform input data.
-   - Handle anomalies, missing values, and outliers.
+### 1. **Data Preprocessing**:
+   - **Cleaning the data**: Remove anomalies, handle missing values, and identify outliers.
+   - **Scaling and Transformation**: Normalize the data to ensure the model performs effectively.
+   - **Data Splitting**: Split the data into training and testing sets.
 
-2. **Feature Engineering**:
-   - Automatically generate time-related features (day, week, month, holidays).
-   - Include external regressors such as weather or traffic if relevant.
+### 2. **Feature Engineering**:
+   - **Time Features**: Generate time-based features such as hour of the day, day of the week, month of the year, and holidays.
+   - **External Regressors**: Add external factors such as weather, promotions, or economic indicators that might affect the forecast.
 
-3. **Model Selection**:
-   - Use the default Silverkite algorithm or select from other models like AutoARIMA or ETS based on the nature of the data.
-   
-4. **Model Training**:
-   - Train the selected model by fitting the data, and adjusting for seasonality, trends, holidays, and regressors.
+### 3. **Model Selection**:
+   - Choose the forecasting model, either the **Silverkite** model or others like **AutoARIMA** based on data characteristics.
+   - If applicable, tune hyperparameters or try different models in parallel to find the best fit.
 
-5. **Forecast Generation**:
-   - Generate point forecasts for future time steps along with uncertainty intervals.
+### 4. **Model Training**:
+   - Train the selected model by fitting it to the training data.
+   - Incorporate seasonality, trend analysis, holiday effects, and any external regressors identified in feature engineering.
 
-6. **Model Diagnostics**:
-   - Diagnose the model using built-in tools and reports to check performance and debug errors.
+### 5. **Forecast Generation**:
+   - Generate forecasts for the desired time period.
+   - Include uncertainty intervals to quantify the confidence in forecasts.
 
-7. **Hyperparameter Tuning**:
-   - Fine-tune parameters for optimal model performance through validation techniques.
+### 6. **Model Diagnostics**:
+   - Use Greykite’s built-in diagnostic tools to analyze model performance.
+   - Plot the residuals, and decompose the forecast to identify how trends, seasonality, and holidays are affecting the output.
+
+### 7. **Hyperparameter Tuning**:
+   - Use validation techniques like cross-validation to fine-tune model parameters for better performance.
 
 ---
 
@@ -137,18 +147,16 @@ The **forecasting workflow** in Greykite typically follows these steps:
 
 1. **Silverkite (Core Algorithm)**: The primary algorithm in Greykite for large-scale time series forecasting with interpretable models.
 2. **ARIMA Integration**: For datasets that benefit from autoregressive techniques, Greykite can integrate and tune ARIMA models.
-3. **External Regressors**: Greykite allows the inclusion of external variables like weather data, social media activity, and more to improve forecasts.
-4. **Scikit-learn Compatibility**: Greykite is compatible with **scikit-learn** tools, allowing it to leverage other machine learning models for time series forecasting.
+3. **External Regressors**: Greykite allows the use of external factors (like promotions or weather) to improve forecast accuracy.
 
 ---
 
 ## Advantages of Greykite
 
-1. **Scalability**: Designed to handle large, complex datasets efficiently.
-2. **Interpretable Models**: Emphasizes transparency in model building by explaining the effect of different features.
-3. **Built-in Event Detection**: Automatically accounts for holidays, events, and anomalies.
-4. **Accurate Forecasts**: Greykite’s forecasting models are optimized for accuracy, especially in long-term forecasting.
-5. **Uncertainty Estimation**: Provides confidence intervals to quantify risk in forecasts.
+1. **Interpretability**: The Silverkite algorithm is designed to provide understandable results with insights into trends, seasonality, and external events.
+2. **Event Handling**: Built-in support for holidays and events, which is crucial for accurate business forecasts.
+3. **Uncertainty Estimation**: It includes confidence intervals to quantify risk in forecasts.
+4. **Scalability**: Greykite is capable of handling large datasets with complex seasonal and event-based patterns.
 
 ---
 
@@ -177,28 +185,28 @@ The **forecasting workflow** in Greykite typically follows these steps:
 
 ## Popular Data Science Applications of Greykite
 
-### 1. Demand Forecasting
+### 1. **Demand Forecasting**
 Greykite helps businesses forecast demand for products or services by accounting for seasonality, holidays, and promotions.
 
-### 2. Financial Time Series Forecasting
+### 2. **Financial Time Series Forecasting**
 Greykite is extensively used for forecasting financial time series, such as stock prices, asset management, and risk forecasting.
 
-### 3. Capacity Planning
+### 3. **Capacity Planning**
 In industries like cloud computing or transportation, Greykite helps businesses predict resource requirements, ensuring efficient use of infrastructure.
 
-### 4. Sales Forecasting
+### 4. **Sales Forecasting**
 With Greykite’s ability to incorporate holidays, promotions, and events, it provides accurate sales forecasts for retail and e-commerce companies.
 
 ---
 
 ## Challenges with Greykite in Data Science
 
-1. **Learning Curve**: The modular design of Greykite requires users to understand time series fundamentals to fully use its features.
+1. **Learning Curve**: The modular design of Greykite requires users to understand time series fundamentals to make full use of its features.
 2. **Limited Neural Network Integration**: Greykite doesn’t support deep learning models as extensively as other frameworks like NeuralProphet or PyTorch Forecasting.
-3. **Documentation**: As a relatively newer library, there are fewer resources and community support than more established time series forecasting tools.
+3. **Documentation**: As a relatively newer library, there are fewer resources and community support compared to more established time series forecasting tools.
 
 ---
 
 ## Conclusion
 
-Greykite is a powerful, scalable, and highly interpretable time series forecasting framework specifically designed to meet the forecasting needs of businesses. Its Silverkite algorithm, advanced feature engineering capabilities, and robust uncertainty estimation stand out as a strong competitor to traditional time series models like ARIMA and more modern tools like Facebook Prophet. While it has some limitations, particularly in its deep learning support, Greykite is an excellent tool for scalable, interpretable forecasting with a business focus.
+Greykite is a powerful, scalable, and highly interpretable time series forecasting framework specifically designed to meet the forecasting needs of businesses. With its Silverkite algorithm, advanced feature engineering capabilities, and robust uncertainty estimation, it stands out as a strong competitor to traditional time series models like ARIMA and more modern tools like Facebook Prophet. While it has some limitations, particularly in its deep learning support, Greykite is an excellent tool for scalable, interpretable forecasting with a business focus.
