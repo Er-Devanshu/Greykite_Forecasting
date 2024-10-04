@@ -118,6 +118,9 @@ The following table summarizes the different models available in Greykite, provi
 | **ETS (Error, Trend, Seasonality)** | Exponential Smoothing State Space Model       | Manual specification    | Limited                 | Simple and interpretable            | Limited flexibility                |
 | **Naive Forecast**         | Basic method that forecasts based on the last observation | None                   | None                    | Easy to implement                   | Not suitable for complex patterns  |
 
+
+### Comparison of Silverkite and Prophet
+
 ---
 
 ## Greykite for Time Series Forecasting
